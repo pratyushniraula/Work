@@ -1,0 +1,6 @@
+g++ (files) && ./a.out
+//if u want to add arguments instead of cin just space and add next to ./a.out
+cd is change directory
+touch makes a new file (name.extension)
+ls list directory
+mkdir make directory (make folder)
