@@ -4,3 +4,7 @@ cd is change directory
 touch makes a new file (name.extension)
 ls list directory
 mkdir make directory (make folder)
+pwd will tell you where you are (print working directory)
+mv move (source to directory) Pratyushniraula@Pratyushs-MBP Work % mv ../../Downloads/macos-clang-arm64.tar.gz .
+    //mv is also how you rename stuff in terminal
+cp copy, same structure as move
