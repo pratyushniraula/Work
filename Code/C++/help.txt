@@ -8,3 +8,6 @@ pwd will tell you where you are (print working directory)
 mv move (source to directory) Pratyushniraula@Pratyushs-MBP Work % mv ../../Downloads/macos-clang-arm64.tar.gz .
     //mv is also how you rename stuff in terminal
 cp copy, same structure as move
+
+git add . && git commit -m "message" && git push
+    this updates your github to include everything in it
