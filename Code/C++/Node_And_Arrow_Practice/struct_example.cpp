@@ -6,7 +6,6 @@ struct person{
     string name;
     int age;
     int birthmonth;
-    
 
     void printing(string n, int a, int b){
         cout << n << " is " << a << " years old. His birth month is " << b << endl;
