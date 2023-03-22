@@ -3,6 +3,7 @@
 using namespace std;
 
 struct person{
+    //structure for person
     string name;
     int age;
     int birthmonth;
