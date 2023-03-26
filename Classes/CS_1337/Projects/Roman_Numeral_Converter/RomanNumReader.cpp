@@ -5,7 +5,7 @@
 #include <map>
 #include <fstream>
 using namespace std;
-
+// core implementation
 int romanToInt(string romannum) {
     //map to correlate letters and numbers
     map<char, int> lettonum{ {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000}};

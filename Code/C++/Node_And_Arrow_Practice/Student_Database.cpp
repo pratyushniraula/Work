@@ -18,7 +18,7 @@ struct student
 
 void addStudent(student *&head, string name, string id, double gpa, unsigned int grade, unsigned int age);
 void deleteStudent(student *&head, string id);
-void editStudent(student *&head, string name, string id, double gpa, unsigned int grade, unsigned int age);
+void editStudent(student *&head, string name, string oldID, string id, double gpa, unsigned int grade, unsigned int age);
 void PrintStudents(student *&head);
 
 int main(int argc, char const *argv[])
