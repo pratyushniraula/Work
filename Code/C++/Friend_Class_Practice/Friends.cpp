@@ -2,9 +2,9 @@
 
 using namespace std;
 
-class pratyush{
+class animals{
     
-};
+}
 
 int main(int argc, char const *argv[])
 {
