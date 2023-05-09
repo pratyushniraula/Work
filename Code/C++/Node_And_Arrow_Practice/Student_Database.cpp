@@ -137,6 +137,14 @@ int main(int argc, char const *argv[])
             case 5:
                 /* exit (stops from automatically outputting default case)*/
                 cout << "Thank You! Program Terminated" << endl;
+                //delete pointers***************
+                while (head != nullptr)
+                {
+                    student *ptr = head;
+                    head = head->next;
+                    delete ptr;
+                }
+                //delete pointers***************
                 break;
 
             default:
@@ -151,6 +159,7 @@ int main(int argc, char const *argv[])
     }
     return 0;
 }
+
 
 void addStudent(student *&current, string n, string id, double g, unsigned int gr, unsigned int a){
     
