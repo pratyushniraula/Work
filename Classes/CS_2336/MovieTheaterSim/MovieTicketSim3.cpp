@@ -333,7 +333,7 @@ int main(){
             reserveSeats(auditorium, (row-1), columnIndex, (col-65), adult, senior, child);
             //if seats are available, reserve seats
             //if seats are not available, display best available seats
-            
+        
         
         }
     }while(choice == "1" || choice == "reserve seats" /*|| choice != "2" || choice != "exit"*/);
