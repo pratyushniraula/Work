@@ -4,7 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-
+/**********************************************************
+this file is not working properly and should be disregarded
+the file that is "Main.java" is the one that is working properly
+***********************************************************/
 public class Main{
     
     public static void displayAuditorium(String[][] auditorium, int row, int col){
