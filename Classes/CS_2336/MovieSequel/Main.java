@@ -11,7 +11,7 @@ public class Main{
     
     public static void displayAuditorium(char[][] auditorium, int row, int col){
         System.out.print("    ");
-
+        
         // Print the column letter
         for(int i = 0; i < col; i++){
             char j = (char) (i + 65);
