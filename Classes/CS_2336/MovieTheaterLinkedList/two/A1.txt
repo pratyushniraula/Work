@@ -1,5 +1,6 @@
 ...AA..CSSAC........
-ACSAACCA.ACCAAAA..SS
-.........AS.........
+ACSAACCA....AAAA..SS
+....ACS..AS.AAAAAA..
 C.A.S.A.S.C.S.C.A.A.
 AACACSSA.CCSSS.AAACC
+

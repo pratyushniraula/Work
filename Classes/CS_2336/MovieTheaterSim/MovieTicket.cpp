@@ -1,11 +1,13 @@
 //Pratyush Niraula
 // pxn210033
 
-//go to csmc and ask about how to collect the file which has any type of rows and columns to match that in the file
-    //csmc said to open file find dimensions, measure it, and then close file and then open it again initialize array and then read the file
-//ask how to be able to find several number of seats available for some amount of people
+/*************************************************************
+**************************************************************
+only MovieTicket3.cpp fully works 
+**************************************************************
+**************************************************************/
 
-//c++ makes 2d arrays with null values as 0's so you can just use a while not until zero count into one part of array, when array is not zero continue it
+
 
 #include <iostream>
 #include <fstream>

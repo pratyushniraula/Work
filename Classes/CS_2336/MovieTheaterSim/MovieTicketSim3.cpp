@@ -7,16 +7,7 @@
 #include <iomanip>
 
 using namespace std;
-/*things to keep in mind
-    // - n is number of seats x is number of seats, you want tickets to be next to each other, pass column size
-    
-    // do the for loop, do the calculation to find the starting seat position plus the ending seat position divided by 2
-    to find the middle seat, when you find the middle seat you will you will take the absolute value of the middle seat
-    minus the middle of the row, there you would find the smallest value of v (distance from middle of best seat to middle of row), 
-    whatever has the smallest value of v would have you store the starting seat s
-
-
-*/
+//only version of the 3 programs that work
 
 //display auditorium function 
 void displayAuditorium(string auditorium[10][26], int row)
