@@ -1,4 +1,5 @@
-package one;
+//Pratyush Niraula
+//Pxn210033
 public class Seat{
     private int row;
     private char column;
@@ -13,7 +14,7 @@ public class Seat{
     public Seat(){
         this.row = 0;
         this.column = '/';
-        this.ticketType = '.';
+        this.ticketType = 0;
     }
 
     public int getRow(){
@@ -35,6 +36,14 @@ public class Seat{
         this.ticketType = ticket;
     }
     //toString method
+    public String toString(){
+        String s = "" + this.ticketType;
+        return s;
+
+    }
+
+
+
     public String seatString(){
         return Integer.toString(row) + column;
 
