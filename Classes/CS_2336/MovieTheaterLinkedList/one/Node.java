@@ -1,4 +1,5 @@
-package one;
+//Pratyush Niraula
+//Pxn210033
 public class Node{
     //node constructor should contain a seat constructor and a node next along with a node down
     private Seat seat = null;
@@ -42,7 +43,7 @@ public class Node{
 
     //return seat's to seatString function
     public String toString(){
-        return seat.seatString();
+        return seat.toString();
     }
     
 
