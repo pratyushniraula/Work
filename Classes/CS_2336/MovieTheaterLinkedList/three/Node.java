@@ -6,22 +6,28 @@ public class Node{
     private Node next;
     private Node down;
     
-    public Node(Seat seat){
-        this.seat = seat;
-        this.next = null;
-        this.down = null;
-    }
+    //default constructor
     public Node(){
         this.seat = new Seat();
         this.next = null;
         this.down = null;
     }
+
+    //overloaded constructor
+    public Node(Seat seat){
+    this.seat = seat;
+    this.next = null;
+    this.down = null;
+    }
+
+    //overloaded constructor
     public Node(int rows, char columns, char seatType){
         this.seat = new Seat(rows, columns, seatType);
         this.next = null;
         this.down = null;
     }
 
+    //getters and setters
     public Seat getSeat(){
         return this.seat;
     }

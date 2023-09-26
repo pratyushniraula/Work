@@ -32,7 +32,8 @@ public class Auditorium{
         //find the amount of columns in each row
         int col = 0;
         Node colFinder = this.head;
-
+        
+        //get the amount of columns
         while(colFinder.getNext() != null){
             col++;
             colFinder = colFinder.getNext();
@@ -41,15 +42,11 @@ public class Auditorium{
         col++;
 
         //print letters
-
-        // System.out.print("    ");
         String s = "    ";
-        
         for(int i = 0; i < col; i++){
-            // System.out.print((char)(65 + i));
             s = s + "" + (char)(65+i);
         }
-        // System.out.println();
+       //get a new line
         s = s + "\n";
         int row = 0;
 
@@ -59,18 +56,17 @@ public class Auditorium{
             if(node.getNext() != null)
             {
                 row++;
-                // System.out.print(row + "   ");
+                //start printing out rows with spaces next to them (3 to be exact)
                 s = s + row + "   ";
             }
             Node node2 = node;
             while(node2 != null && node2.getSeat().getTicketType() != 0){
                 if(node2.getSeat().getTicketType() == 'A' || node2.getSeat().getTicketType() == 'S' || node2.getSeat().getTicketType() == 'C'){
-                //System.out.print(node2.getSeat().getTicketType());
-                // System.out.print('#');
+                //if tickettype is A, S, or C, print out # because user does not need to know what type of ticket it is
                 s = s + "#";
                 node2 = node2.getNext();
                 }
-
+                //if it is a dot, leave it as a dot
                 else if(node2.getSeat().getTicketType() == '.'){
                     // System.out.print('.');
                     s = s + ".";
@@ -78,7 +74,7 @@ public class Auditorium{
                 }
 
             }
-            // System.out.println();
+            // get a new line and move to the next row
             s = s + "\n";
             node = node.getDown();
         }
@@ -102,6 +98,7 @@ public class Auditorium{
             row++;
             rowFinder = rowFinder.getDown();
         }
+        //find the amount of columns
         int col = 0;
         Node colFinder = auditorium.getHead();
         while (colFinder.getNext() != null) {
@@ -109,14 +106,17 @@ public class Auditorium{
             colFinder = colFinder.getNext();
         }
 
-    
+        //find the best seat
         for (int i = 0; i < row; i++) {
             for (int j = 0; j <= col - totalTickets + 1; j++) {
+                //from the nested for loop, ever possible iteration is checked if it passes seatValidity
                 if (seatValidity(i, (char)(j+65), totalTickets, auditorium)) {
-                    // Calculate the distance for this seat
+                    // if the seats are valid calculate the distance for this seat using pythagorean theorem
+                    //colMiddle was originally not a variable but IDE was having issues so I'm going to keep it and not risk breaking anything
                     double colMiddle = (j + (totalTickets / 2.0));
+                    //distance formula/ pythagorean theorem
                     double distance = Math.sqrt(Math.pow(row/2 - i, 2) + Math.pow(col/2 - colMiddle, 2));
-                
+                    // the lower the distance from the middle the better, and so if a better one is found replace it
                     if (distance < bestDistance) {
                         bestDistance = distance;
                         bestRow = i + 1;
@@ -127,20 +127,23 @@ public class Auditorium{
         }
     
         if (bestRow != -1) {
-
+            //if best row is not -1, then there are seats available
             if(totalTickets > 1){
+                //if there are more than one ticket, print out the range of seats
                 System.out.println("These are the best available seats, do you want to continue with your purchase?");
                 char lastCol = (char)(bestCol + totalTickets - 1);
                 System.out.println("" + bestRow + bestCol + " - " + bestRow + lastCol);
             }
             else{
+                //if there is only one ticket, print out the seat
                 System.out.println("These are the best available seats, do you want to continue with your purchase?");
                 System.out.println("" + bestRow + bestCol);
             }
-    
+            //ask user if they want to continue with their purchase
             char yesNo = 'n';
             do {
                 System.out.println("y/n?");
+                //do try catch to make sure user inputs a valid input
                 try {
                     yesNo = s.next().charAt(0);
                 } catch (InputMismatchException e) {
@@ -153,121 +156,15 @@ public class Auditorium{
             } while (yesNo != 'y' && yesNo != 'Y' && yesNo != 'n' && yesNo != 'N');
             
             if (yesNo == 'y' || yesNo == 'Y') {
+                //if user wants to continue with their purchase, reserve seats
                 reserveSeats(bestRow-1, bestCol, adult, child, senior, auditorium, s);
             }
         } 
         else {
+            //if best row is -1, then there are no seats available
             System.out.println("Not enough seats available");
         }
     }
-
-    // public void bestAvailable(int adult, int child, int senior, Auditorium auditorium, Scanner s){
-    //     //find best available using pythagorean theorem
-    //     int totalTickets = adult + child + senior;
-    //     int row = 0; // total amount of rows, not index
-    //     int col = 0; // total amount of columns, not index
-    //     double colMiddle = 0; //finds the middle of every column
-    //     double rowMiddle = 1000; // finds the best row possible if it is possible
-    //     double distance = 0; //calcultes distance from the middle using displacement formula
-    //     double bestDistance = 100000;// smallest distance from the middle
-    //     int bestRow = 0; //stores the best row
-    //     char bestCol = 0; // stores the best column
-    //     Node node = auditorium.getHead();
-
-    //     //loop through to find column size and row size
-    //     Node counterNode = auditorium.getHead();
-    //     while (counterNode.getDown() != null){
-    //         row++;
-    //         counterNode = counterNode.getDown();
-    //     }
-    //     //AHHHHHHHHHHHHHHHHHHHHH COME BACK HEREEEEEEEEEE
-    //     // row++;
-
-    //     while(counterNode.getNext() != null){
-    //         col++;
-    //         counterNode = counterNode.getNext();
-    //     }
-    //     // col++;
-
-    //     colMiddle = col/2.0;
-    //     rowMiddle = row/2.0;
-        
-    //     //now that the column and row middles were found, along with rows and cols iterating through a for loop is easier
-    //     //iterate through all of the columns and have the total 
-
-    //     while(node != null){
-    //         for (int i = 0; i < col - totalTickets; i++){
-    //             //check if the seats are available
-    //             if(seatValidity(node.getSeat().getRow(), (char)(65 + i), totalTickets, auditorium)){
-    //                 //change the values of row and col
-    //                 col = i;
-    //                 row = node.getSeat().getRow();
-
-    //                 //calculate distance
-    //                 distance = Math.sqrt(Math.pow((rowMiddle - row), 2) + Math.pow((colMiddle - i), 2));
-    //                 //check if distance is less than best distance
-    //                 if(distance < bestDistance){
-    //                     bestDistance = distance;
-    //                     bestRow = row;
-    //                     bestCol = (char)(65 + i);
-    //                 }
-    //             }
-    //         }
-    //         node = node.getDown();
-    //     }
-
-    //     //this will check if the last row is the best row if best row has not been found
-    //     if(bestDistance >= 10000){
-    //         while(node != null){
-    //             for (int i = 0; i < col - totalTickets; i++){
-    //                 //check if the seats are available
-    //                 if(seatValidity(row, (char)(65 + i), totalTickets, auditorium)){
-    //                     //calculate distance
-    //                     col = i;
-    //                     row = node.getSeat().getRow();
-    //                     distance = Math.sqrt(Math.pow((rowMiddle - row), 2) + Math.pow((colMiddle - i), 2));
-    //                     //check if distance is less than best distance
-    //                     if(distance < bestDistance){
-    //                         bestDistance = distance;
-    //                         bestRow = row;
-    //                         bestCol = (char)(65 + i);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     //reserve seats
-    //     if (seatValidity(bestRow, bestCol, totalTickets, auditorium)){
-    //         // reserveSeats(bestRow, bestCol, totalTickets, 0, 0, auditorium);
-    //         System.out.println("these are the best available seats, do you want to continue with your purchase?");
-    //         System.out.println("" + bestRow + "" + bestCol);
-
-    //         char yesNo = 'n';
-    //         //get user input
-    //         //validate user input for every input
-    //         do{
-    //             System.out.println("y/n?");
-    //             try{
-    //                 yesNo = s.next().charAt(0);
-    //             }
-    //             catch(InputMismatchException e){
-    //                 s.nextLine();
-    //                 System.out.println("Must be a y, Y, n, or N");
-    //             }
-    //             if (yesNo != 'y' && yesNo != 'Y' && yesNo != 'n' && yesNo != 'N'){
-    //                 System.out.println("Invalid input");
-    //             }
-    //         }while (yesNo != 'y' && yesNo != 'Y' && yesNo != 'n' && yesNo != 'N');
-
-
-    //         reserveSeats(bestRow, bestCol, adult, child, senior, auditorium, s);
-
-    //     }
-    //     else{
-    //         System.out.println("Not enough seats available");
-    //     }
-    // }
 
 
     public boolean seatValidity(int row, char column, int totalTickets, Auditorium auditorium){
@@ -303,31 +200,6 @@ public class Auditorium{
         return valid;
     }
 
-    // public boolean seatValidity(int row, char column, int totalTickets, Auditorium auditorium) {
-    //     Node node = auditorium.getHead();
-        
-    //     // Find the node for the given row and column
-    //     while (node != null && (node.getSeat().getRow() != row || node.getSeat().getColumn() != column)) {
-    //         node = node.getNext();
-    //     }
-        
-    //     if (node == null) {
-    //         // Seat not found, or it's out of bounds
-    //         return false;
-    //     }
-        
-    //     // Check if the total number of tickets you want to reserve are available in sequence
-    //     Node seatNode = node;
-    //     for (int i = 0; i < totalTickets; i++) {
-    //         if (seatNode == null || seatNode.getSeat().getTicketType() != '.') {
-    //             return false;
-    //         }
-    //         seatNode = seatNode.getNext();
-    //     }
-        
-    //     return true;
-    // }
-
 
     public void reserveSeats(int row, char col, int adultTickets, int childTickets, int seniorTickets, Auditorium auditorium, Scanner s){
         //reserve seats
@@ -345,16 +217,19 @@ public class Auditorium{
         //reserve seats
         if (seatValidity(row, col, adultTickets + childTickets + seniorTickets, auditorium)){
             
+            //reserve adults first
             for (int i = 0; i < adultTickets; i++){
                 node.getSeat().setTicketType('A');
                 node = node.getNext();
             }
 
+            //reserve children second
             for (int i = 0; i < childTickets; i++){
                 node.getSeat().setTicketType('C');
                 node = node.getNext();
             }
             
+            //reserve seniors third
             for (int i = 0; i < seniorTickets; i++){
                 node.getSeat().setTicketType('S');
                 node = node.getNext();
@@ -363,7 +238,7 @@ public class Auditorium{
         }
         else{
             //do bestavailable
-            
+            //everything related to best available and console outputs are in the method best available, unlike my previous programs
             bestAvailable(adultTickets, childTickets, seniorTickets, auditorium, s);
 
         }
@@ -373,9 +248,12 @@ public class Auditorium{
     public void displayReport(Auditorium auditorium){
         //write to file
         try{
+            //initialization of filewriter and printwriter
             FileOutputStream fileWriter = new FileOutputStream("A1.txt");
             PrintWriter printWriter = new PrintWriter("A1.txt");
+            //go through list to get values for everything
             Node node = auditorium.getHead();
+            //print to file
             while(node != null){
                 Node node2 = node;
                 while(node2 != null && node2.getSeat().getTicketType() != 0){
@@ -395,6 +273,7 @@ public class Auditorium{
         }
 
         //go through list to get values for everything
+        //set everything to default values
         Node node = auditorium.getHead();
         int totalSeats = 0;
         int totalTickets = 0;
@@ -403,24 +282,27 @@ public class Auditorium{
         int seniorTickets = 0;
         double totalSales = 0;
 
+        //go through list to get values for everything
         while(node != null){
             Node node2 = node;
             while(node2 != null && node2.getSeat().getTicketType() != 0){
                 totalSeats++;
 
+                //check if seat contains adult, child or senior
                 if(node2.getSeat().getTicketType() == 'A' || node2.getSeat().getTicketType() == 'S' || node2.getSeat().getTicketType() == 'C'){
+                    //if it is adult
                     if(node2.getSeat().getTicketType() == 'A'){
                         adultTickets++;
                         totalTickets++;
                         totalSales += 10;
                     }
-
+                    //if it is child
                     else if(node2.getSeat().getTicketType() == 'C'){
                         childTickets++;
                         totalTickets++;
                         totalSales += 5;
                     }
-
+                    //if it is senior
                     else if(node2.getSeat().getTicketType() == 'S'){
                         seniorTickets++;
                         totalTickets++;
@@ -428,14 +310,17 @@ public class Auditorium{
                     }
 
                 }
+                //iterates to next node
                 node2 = node2.getNext();
             }
+            //iterates to next node
             node = node.getDown();
         }
 
 
 
-        //display report to console
+        //displays report to console
+        //formated everything to match previous project and core implementation
         System.out.printf("Total Seats:\t%d\n", totalSeats);
         System.out.printf("Total Tickets:\t%d\n", totalTickets);
         System.out.printf("Adult Tickets:\t%d\n", adultTickets);
@@ -444,5 +329,3 @@ public class Auditorium{
         System.out.printf("Total Sales:\t$%.2f\n", totalSales);
     }
 }
-
-//for best avail use doubles for everything, remember 

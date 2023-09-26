@@ -10,19 +10,8 @@ import java.lang.String;
 import java.util.Scanner;
 
 public class Main{
-    //make a new constructor for auditorium and call it 
-    //Auditorium auditorium = new Auditorium();
-
-
-
-    /******************************************
-     * 
-     * make sure to fix input validation for file input as well as others, maybe use a file exception
-     * work on best available method inside of auditorium
-     * do try catches for input validation
-     */
-    
     public static void main(String[] args){
+        //variable initialization
         System.out.println("Enter the name of the file: ");
         Scanner s = new Scanner(System.in);
         String fileName = s.nextLine();
@@ -42,29 +31,33 @@ public class Main{
             //Node node = t.auditorium.head;
             tempRow = 0;
             Node RowHeadStore = auditorium.getHead();
-
+            // create the auditorium and its inside body
             while (fileScanner.hasNext()){
                 String line = fileScanner.nextLine();
                 tempCol = 65;
-                
+                //storing variables inside the seat node from the Node ndoe
                 for(int i = 0; i < line.length(); i++){
                     tempCol = (char)(65 + i);
                     if (line.charAt(i) == 'A' || line.charAt(i) == 'S' || line.charAt(i) == 'C' || line.charAt(i) == '.') {
                         
+                        //uses overloaded constructor
                         if (RowHeadStore.getSeat().getTicketType() == 0) {
                             RowHeadStore.setSeat(new Seat(tempRow, tempCol, line.charAt(i)));
                         } 
                         
                         else {
+                            //gets the next value
                             Node tempNode = RowHeadStore;
                             while (tempNode.getNext() != null) {
                                 tempNode = tempNode.getNext();
                             }
+                            //creates a new node
                             Node newNode = new Node(tempRow, tempCol, line.charAt(i));
                             tempNode.setNext(newNode);
                         }
                     }
                 }
+                //start the next row
                 Node oneRowDown = new Node();
                 RowHeadStore.setDown(oneRowDown);
                 RowHeadStore = oneRowDown;
@@ -72,7 +65,6 @@ public class Main{
             }
             //close scanner
             fileScanner.close();
-            //print auditorium
         }
         catch(FileNotFoundException noFile){
             //if file cannot be found, print this
@@ -80,19 +72,20 @@ public class Main{
         }
         
         do{
+            //variable initialization
+            //set to bogus values as a placeholder
             int adult = -1;
             int child = -1;
             int senior = -1;
             char userCol = 0;
             int userRow = -1;
             
-
+            //new line
             System.out.println();
-
-            //display menu
-            // System.out.println("1. Reserve Seats");
-            // System.out.println("2. Exit");
             
+            //start of a long list of input validation and making sure variables exist
+            
+            //menu validation
             do{
                 System.out.println("1. Reserve Seats");
                 System.out.println("2. Exit");
@@ -107,18 +100,18 @@ public class Main{
 
             }while (choice != 1 && choice != 2);
             
-            // choice = s.nextInt();
+            //new line
             System.out.println();
 
-            
+            //if they want to reserve seats
             if (choice == 1){
                 //print auditorium
-                // auditorium.printAuditorium(tempCol-65);
                 System.out.println(auditorium.toString());
                 System.out.println();
                 //get user input
                 //validate user input for every input
 
+                //row validation
                 //try catch the row they want to reserve
                 do{
                     System.out.println("Enter the row of the seat you want to reserve: ");
@@ -207,12 +200,14 @@ public class Main{
 
 
                 //reserve the seat(s)
+                //-1 because the user input is 1 greater than the actual row
                 auditorium.reserveSeats(userRow-1, userCol, adult, child, senior, auditorium, s);
                 
                 
             }
 
             else if (choice == 2){
+                //display report because the end of the program is near
                 auditorium.displayReport(auditorium);
             }
 
