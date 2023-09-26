@@ -5,18 +5,20 @@ public class Seat{
     private char column;
     private char payload;
 
-    //seat constructor
+    //seat overloaded constructor
     public Seat(int row, char column, char ticketType){
         this.row = row;
         this.column = column;
         this.payload = ticketType;
     }
+    //seat default constructor
     public Seat(){
         this.row = 0;
         this.column = '/';
         this.payload = 0;
     }
 
+    //getters and setters
     public int getRow(){
         return row;
     }
@@ -42,10 +44,4 @@ public class Seat{
 
     }
 
-
-
-    public String seatString(){
-        return Integer.toString(row) + column;
-
-    }
 }
