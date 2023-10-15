@@ -1,4 +1,6 @@
-package RewardsSystem;
+// package RewardsSystem;
+//Pratyush Niraula
+//pxn210022
 
 public class Gold extends Customer{
     private double discountPercent;
@@ -13,11 +15,13 @@ public class Gold extends Customer{
     }
 
     //getters and setters
-    public double getDiscountPercent() {
+    @Override
+    public double getDiscount() {
         return discountPercent;
     }
     public void setDiscountPercent(double discountPercent) {
         this.discountPercent = discountPercent;
     }
+
 
 }
