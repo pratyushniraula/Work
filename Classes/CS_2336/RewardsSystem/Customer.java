@@ -1,4 +1,6 @@
-package RewardsSystem;
+// package RewardsSystem;
+//Pratyush Niraula
+//pxn210022
 
 public class Customer{
     protected String firstName;
@@ -12,6 +14,8 @@ public class Customer{
     public Customer(String first, String last, String guestid, double spent){
         this.firstName = first;
         this.lastName = last;
+        this.GuestID = guestid;
+        this.moneySpent = spent;
     }
 
     //getters and setters
@@ -27,6 +31,7 @@ public class Customer{
     public double getMoneySpent() {
         return moneySpent;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -36,8 +41,13 @@ public class Customer{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public void setMoneySpent(double moneySpent) {
-        this.moneySpent = moneySpent;
+    public void setMoneySpent(double moneySpent2) {
+        this.moneySpent = moneySpent2;
+    }
+
+    //only way to access or not access specific discount as parent cannot use child methods but can use overriden child method
+    public double getDiscount(){
+        return 0;
     }
 
 
