@@ -7,11 +7,14 @@ public class DVD implements Comparable<DVD>{
     private int available;
     private int rented;
 
+    //default constructor
     public DVD() {
         this.title = "";
         this.available = 0;
         this.rented = 0;
     }
+
+    //overloaded constructors with different parameters
     public DVD(String title, int available, int rentable) {
         this.title = title;
         this.available = available;
@@ -61,14 +64,11 @@ public class DVD implements Comparable<DVD>{
     public int compareTo(DVD dvd) {
         return this.title.compareTo(dvd.getTitle());
     }
-    // @Override
-    // public String toString() {
-    //     return String.format(this.title + "\t" + this.available + "\t" + this.rentable);
-    // }
    
     //toString method
     @Override
     public String toString() {
+        //return the string in the format of title, available, and rented as to be displayed in the table in a neat format
         return String.format("%-30s %-10d%-10d", title, available, rented);
     }
 

@@ -2,48 +2,65 @@
 //pxn210033
 //generic binary tree class 
 //package RedboxInventorySystem;
+import java.util.ArrayList;
 
 public class BinTree<T extends Comparable<T>> {
     private Node<T> root;
 
+    //default constructor
     public BinTree() {
         this.root = null;
     }
 
+    //overloaded constructor
     public BinTree(Node<T> root) {
         this.root = root;
     }
 
+    //getter
     public Node<T> getRoot() {
         return this.root;
     }
 
+    //setter
     public void setRoot(Node<T> root){
         this.root = root;
     }
 
+    
     //create a recursive insert method
     //helper method for insert
     public void insert(Node<T> newNode) {
         insert(this.root, newNode);
     }
-    //helped recursive method that displays T instead of the the entire node
-    public void insert(Node<T> root, Node<T> newNode) {
+    //helped recursive method that inserts the node in the correct place
+    private void insert(Node<T> root, Node<T> newNode) {
+        //if the root is null, set the root to the new node
         if (root == null) {
             this.root = newNode;
         }
+
+        //if the root is less than the new node, insert the new node to the right
         else if (root.compareTo(newNode) < 0) {
+            //if the right node is null, set the right node to the new node
             if (root.getNodeRight() == null) {
                 root.setNodeRight(newNode);
             }
+
+            //else, recursively call the insert method
             else {
                 insert(root.getNodeRight(), newNode);
             }
         }
+
+        //if the root is greater than the new node, insert the new node to the left
         else if (root.compareTo(newNode) > 0) {
+            //if the left node is null, set the left node to the new node
             if (root.getNodeLeft() == null) {
                 root.setNodeLeft(newNode);
             }
+
+            //else, recursively call the insert method
             else {
                 insert(root.getNodeLeft(), newNode);
             }
@@ -51,154 +68,171 @@ public class BinTree<T extends Comparable<T>> {
     }
 
     //create a recursive search method
-    //helped recursive method that displays T instead of the the entire node
+    //helper recursive method that displays T instead of the the entire node for privacy
     public T search(Node<T> searchNode){
-        if(searchHelp(this.root, searchNode) != null)
-        return searchHelp(this.root, searchNode).getData();
+        //if the search node is found, return the data
+        if(searchHelp(this.root, searchNode) != null){
+            return searchHelp(this.root, searchNode).getData();
+        }
+
+        //else, return null
         else{
-            System.out.println("Node not found in search");
             return null;
         }
     }
     //actual recursive method
     private Node<T> searchHelp(Node<T> root, Node<T> searchNode) {
+        //if the root is null, return null
         if (root == null) {
             return null;
         }
+
+        //if the root is equal to the search node, return the root
         else if (root.compareTo(searchNode) == 0) {
             return root;
         }
+
+        //if the root is less than the search node, recursively call the search method
         else if (root.compareTo(searchNode) < 0) {
             return searchHelp(root.getNodeRight(), searchNode);
         }
+
+        //if the root is greater than the search node, recursively call the search method
         else if(root.compareTo(searchNode) > 0){
             return searchHelp(root.getNodeLeft(), searchNode);
         }
+        
+        //if nothing else works return null anyway
         return null;
     }
 
 
     //create a recursive delete method
-    public T delete(Node<T> deleteNode) {
-        Node<T> node = deleteHelper(this.root, deleteNode, null);
-        if(node != null)
-        return node.getData();
-        else{
-            System.out.println("Node not found in delete");
-            return null;
-        }
+    public void delete(Node<T> deleteNode) {
+        //just calls the actual delete method
+        deleteHelper(deleteNode.getData());
+        //no return statement as none is needed for this program to verify deletion
     }
-    //helper method for the deleting for recursive purposes
-    public Node<T> deleteHelper(Node<T> child, Node<T> deleteNode, Node<T> parent) {
-        if (child == null) {
-            return null;
-        }
-        // else if (child.compareTo(deleteNode) < 0) {
-        //     child.setNodeRight(deleteHelper(child.getNodeRight(), deleteNode, child));
-        // }
-        // else if (child.compareTo(deleteNode) > 0) {
-        //     child.setNodeLeft(deleteHelper(child.getNodeLeft(), deleteNode, child));
-        // }
-        else if (child.compareTo(deleteNode) < 0) {
-            Node<T> newChild = deleteHelper(child.getNodeRight(), deleteNode, child);
-            child.setNodeRight(newChild);
-            if (parent != null) {
-                parent.setNodeRight(child);
-            }
-        }
-        else if (child.compareTo(deleteNode) > 0) {
-            Node<T> newChild = deleteHelper(child.getNodeLeft(), deleteNode, child);
-            child.setNodeLeft(newChild);
-            if (parent != null) {
-                parent.setNodeLeft(child);
-            }
-        }
-        else /*if(root.compareTo(deleteNode) == 0 && root != null && parent != null)*/{
-            //if root is a leaf
-            if(child.getNodeLeft() == null && child.getNodeRight() == null){
-                Node<T> temp = child;
-                child = null;
-                return temp;
-            }
-            //if root has one child
-            else if(child.getNodeLeft() != null ^ child.getNodeRight() != null){
-                if(parent == null){
-                    if(child.getNodeLeft() != null){
-                        Node<T> temp = child;
-                        this.root = child.getNodeLeft();
-                        return temp;
-                    }
-                    else{
-                        Node<T> temp = child;
-                        this.root = child.getNodeRight();
-                        return temp;
-                    }
-                }
-                else if(child.getNodeLeft() != null){
-                    parent.setNodeLeft(child.getNodeLeft());
-                    child.setNodeLeft(null);
-                    return child;
-                }
-                else{
-                    parent.setNodeRight(child.getNodeRight());
-                    child.setNodeRight(null);
-                    return child;
-                }
-            }
-            //if root has two children
-            // else /*if(root.getNodeLeft() != null && root.getNodeRight() != null)*/{
-            //     Node<T> temp = root.getNodeRight();
-            //     temp = leftMost(temp);
 
-            //     T triangleTransfer = root.getData();
-            //     temp.setData(triangleTransfer);
-            //     root.setData(temp.getData());
-            //     deleteHelper(root.getNodeRight(), temp, null);
-            //     Node<T> temp2 = new Node<>(triangleTransfer);
-            //     return temp2;
-            // }
+    private void deleteHelper(T key) {
+        //variable initialization
+        Node<T> parent = null;
+        Node<T> current = this.root;
+        //while the current node is not null
+        while (current != null) {
+            //if the current node is equal to the key, ei the node to be deleted has been located
+            if (current.getData().equals(key)) {
+                //if the current node has no children, set the root to null
+                if (current.getNodeLeft() == null && current.getNodeRight() == null) {
+                    if (parent == null) {
+                        this.root = null;
+                    } 
+                    
+                    //if the current node is the left child of the parent, set the left child to null
+                    else if (parent.getNodeLeft() == current) {
+                        parent.setNodeLeft(null);
+                    } 
+
+                    //if the current node is the right child of the parent, set the right child to null
+                    else {
+                        parent.setNodeRight(null);
+                    }
+                } 
+                //if the current node has one child and the right node is null continue with else if
+                else if (current.getNodeRight() == null) {
+                    //if the parent is null then set the root to the current node's left child
+                    if (parent == null) {
+                        this.root = current.getNodeLeft();
+                    } 
+
+                    //if the current node is the left child of the parent, set the left child's left node to the parent node's left child
+                    else if (parent.getNodeLeft() == current) {
+                        parent.setNodeLeft(current.getNodeLeft());
+                    } 
+
+                    //if the current node is the right child of the parent, set the right child to the current node's left child
+                    else {
+                        parent.setNodeRight(current.getNodeLeft());
+                    }
+                } 
+
+                //if the current node has one child, set the parent to the child
+                else if (current.getNodeLeft() == null) {
+                    //if the parent is null, set the root to the current node's right child
+                    if (parent == null) {
+                        this.root = current.getNodeRight();
+                    } 
+                    
+                    //if the current node is the left child of the parent, set the left child of the parent to the current node's right child
+                    else if (parent.getNodeLeft() == current) {
+                        parent.setNodeLeft(current.getNodeRight());
+                    } 
+                    //if the current node is the right child of the parent, set the right child of the parent to the current node's right child
+                    else {
+                        parent.setNodeRight(current.getNodeRight());
+                    }
+                } 
+
+                //if the current node has two children
+                else {
+                    //find the successor of the current node
+                    Node<T> successor = current.getNodeRight();
+                    //find the leftmost node of the successor
+                    // while (successor.getNodeLeft() != null) {
+                    //     successor = successor.getNodeLeft();
+                    // }
+                    successor = leftMost(successor);
+                    //set the current node's data to the successor's data
+                    T successorData = successor.getData();
+                    //delete the successor
+                    deleteHelper(successorData);
+                    //set the current node's data to the successor's data
+                    current.setData(successorData);
+                }
+                //as the program is now done, there is no point in continuing the recursion
+                return;
+            } 
+            
+            //if the current node is less than the key, set the parent to the current node and the current node to the right child
+            else if (current.getData().compareTo(key) < 0) {
+                parent = current;
+                current = current.getNodeRight();
+            } 
+            //if the current node is greater than the key, set the parent to the current node and the current node to the left child
             else {
-                Node<T> temp = leftMost(child.getNodeRight());
-            
-                // Save the data of the root node
-                T childData = child.getData();
-            
-                // Copy the data of the minimum node to the root
-                child.setData(temp.getData());
-            
-                // Delete the minimum node from the right subtree
-                child.setNodeRight(deleteHelper(child.getNodeRight(), temp, child));
-            
-                // Create a new node with the original data of the root
-                Node<T> temp2 = new Node<>(childData);
-            
-                return temp2;
+                parent = current;
+                current = current.getNodeLeft();
             }
         }
-        return child;
-        
     }
 
-    //finder for leftmost node in the tree
+    //finder for leftmost node in the tree for the delete method
     public Node<T> leftMost(Node<T> root){
+        //if the root is null, return the root as you have reached the leftmost node
         if(root.getNodeLeft() == null){
             return root;
         }
+        //else, recursively call the leftmost method
         else{
             return leftMost(root.getNodeLeft());
         }
     }
 
-    //might or might not work but wants to print tostring method
+
     @Override
     public String toString() {
+        //create a string builder
         StringBuilder sb = new StringBuilder();
+        //call the recursive method to traverse the tree in order and append the data to the string builder
         traverseInOrder(this.root, sb);
+        //return the string builder as a string
         return sb.toString();
     }
 
     private void traverseInOrder(Node<T> node, StringBuilder sb) {
+        //if the node is not null, recursively call the method
         if (node != null) {
+            //inorder traversal, left, process (append into stringbuilder to be loaded and ready to print), right
             traverseInOrder(node.getNodeLeft(), sb);
             sb.append(node.getData().toString()).append("\n");
             traverseInOrder(node.getNodeRight(), sb);

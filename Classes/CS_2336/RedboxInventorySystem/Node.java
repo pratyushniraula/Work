@@ -51,6 +51,7 @@ public class Node<T extends Comparable<T>> implements Comparable <Node<T>>{
     //toString method
     @Override
     public String toString() {
+        //goes to the data class and calls the toString method
         return this.data.toString();
     }
 
