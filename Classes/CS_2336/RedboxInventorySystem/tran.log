@@ -5,8 +5,9 @@ remove "The Crow",1
 return "Passengers"
 remove "Captain America: Civil War",2
 add "    Passengers    ",3
-add "movie",4
-add "move=ie",5
-add "true",6
-add "blue",1
-remove "blue",1
+add "Movie",4
+add "Move=ie",5
+add "True",6
+add "Blue",1
+remove "Blue",1
+rent "Move=ie"
