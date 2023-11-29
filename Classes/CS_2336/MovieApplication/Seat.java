@@ -3,20 +3,22 @@
 public class Seat{
     private int row;
     private char column;
-    private char ticketType;
+    private char payload;
 
-    //seat constructor
+    //seat overloaded constructor
     public Seat(int row, char column, char ticketType){
         this.row = row;
         this.column = column;
-        this.ticketType = ticketType;
+        this.payload = ticketType;
     }
+    //seat default constructor
     public Seat(){
         this.row = 0;
         this.column = '/';
-        this.ticketType = 0;
+        this.payload = 0;
     }
 
+    //getters and setters
     public int getRow(){
         return row;
     }
@@ -24,7 +26,7 @@ public class Seat{
         return column;
     }
     public char getTicketType(){
-        return ticketType;
+        return payload;
     }
     public void setRow(int row){
         this.row = row;
@@ -33,11 +35,14 @@ public class Seat{
         this.column = column;
     }
     public void setTicketType(char ticket){
-        this.ticketType = ticket;
+        this.payload = ticket;
     }
     //toString method
-    public String seatString(){
-        return Integer.toString(row) + column;
+    @Override
+    public String toString(){
+        String s = "" + this.payload;
+        return s;
 
     }
+
 }
