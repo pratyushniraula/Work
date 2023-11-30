@@ -27,7 +27,7 @@ public class Auditorium{
     public Node getHead() {
         return head;
     }
-
+        @Override
         public String toString(){
         //find the amount of columns in each row
         int col = 0;

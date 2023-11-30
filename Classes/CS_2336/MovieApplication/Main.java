@@ -134,29 +134,151 @@ public class Main{
         return table;
     }
     public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
         //open auditorium files
-
-
-
+        Auditorium a1 = null;
+        Auditorium a2 = null;
+        Auditorium a3 = null;
         boolean adminExit = false;
         // Customer m = new Customer();
         // Customer name = new Customer();
         // Customer pass = new Customer();
         // Customer.order o = new Customer.order();
         HashMap<String, Customer> custList;
-        custList = readFromFile("userdb.dat");
-        Scanner s = new Scanner(System.in);
+        System.out.println("Enter the name of the file: ");
+        String filename = s.nextLine();
+        custList = readFromFile(filename);
         String username = "";
+        
+        ////////////////////////////////////////////////////////////////////////
+        try{
+            System.out.println("Enter the name of the file for auditorium 1: ");
+            filename = s.nextLine();
+            File file1 = new File(filename);
+            System.out.println("Enter the name of the file for auditorium 2: ");
+            filename = s.nextLine();
+            File file2 = new File(filename);
+            System.out.println("Enter the name of the file for auditorium 3: ");
+            filename = s.nextLine();
+            File file3 = new File(filename);
+            Scanner fileScanner1 = new Scanner(file1);
+            Scanner fileScanner2 = new Scanner(file2);
+            Scanner fileScanner3 = new Scanner(file3);
+            a1 = new Auditorium();
+            a2 = new Auditorium();
+            a3 = new Auditorium();
+            //get the auditorium
+            //Node node = t.auditorium.head;
+            int tempRow = 0;
+            Node RowHeadStore = a1.getHead();
+            while (fileScanner1.hasNext()){
+                String line = fileScanner1.nextLine();
+                char tempCol = 65;
+                for(int i = 0; i < line.length(); i++){
+                    tempCol = (char)(65 + i);
+                    if (line.charAt(i) == 'A' || line.charAt(i) == 'S' || line.charAt(i) == 'C' || line.charAt(i) == '.') {
+                        
+                        if (RowHeadStore.getSeat().getTicketType() == 0) {
+                            RowHeadStore.setSeat(new Seat(tempRow, tempCol, line.charAt(i)));
+                        } 
+                        
+                        else {
+                            Node tempNode = RowHeadStore;
+                            while (tempNode.getNext() != null) {
+                                tempNode = tempNode.getNext();
+                            }
+                            Node newNode = new Node(tempRow, tempCol, line.charAt(i));
+                            tempNode.setNext(newNode);
+                        }
+                    }
+                }
+                Node oneRowDown = new Node();
+                RowHeadStore.setDown(oneRowDown);
+                RowHeadStore = oneRowDown;
+                tempRow++;
+            }
+            //close scanner
+            fileScanner1.close();
+            //print auditorium
+            tempRow = 0;
+            RowHeadStore = a2.getHead();
+            while (fileScanner2.hasNext()){
+                String line = fileScanner2.nextLine();
+                char tempCol = 65;
+                for(int i = 0; i < line.length(); i++){
+                    tempCol = (char)(65 + i);
+                    if (line.charAt(i) == 'A' || line.charAt(i) == 'S' || line.charAt(i) == 'C' || line.charAt(i) == '.') {
+                        
+                        if (RowHeadStore.getSeat().getTicketType() == 0) {
+                            RowHeadStore.setSeat(new Seat(tempRow, tempCol, line.charAt(i)));
+                        } 
+                        
+                        else {
+                            Node tempNode = RowHeadStore;
+                            while (tempNode.getNext() != null) {
+                                tempNode = tempNode.getNext();
+                            }
+                            Node newNode = new Node(tempRow, tempCol, line.charAt(i));
+                            tempNode.setNext(newNode);
+                        }
+                    }
+                }
+                Node oneRowDown = new Node();
+                RowHeadStore.setDown(oneRowDown);
+                RowHeadStore = oneRowDown;
+                tempRow++;
+            }
+            //close scanner
+            fileScanner2.close();
+            //print auditorium
+            tempRow = 0;
+            RowHeadStore = a3.getHead();
+            while (fileScanner3.hasNext()){
+                String line = fileScanner3.nextLine();
+                char tempCol = 65;
+                for(int i = 0; i < line.length(); i++){
+                    tempCol = (char)(65 + i);
+                    if (line.charAt(i) == 'A' || line.charAt(i) == 'S' || line.charAt(i) == 'C' || line.charAt(i) == '.') {
+                        
+                        if (RowHeadStore.getSeat().getTicketType() == 0) {
+                            RowHeadStore.setSeat(new Seat(tempRow, tempCol, line.charAt(i)));
+                        } 
+                        
+                        else {
+                            Node tempNode = RowHeadStore;
+                            while (tempNode.getNext() != null) {
+                                tempNode = tempNode.getNext();
+                            }
+                            Node newNode = new Node(tempRow, tempCol, line.charAt(i));
+                            tempNode.setNext(newNode);
+                        }
+                    }
+                }
+                Node oneRowDown = new Node();
+                RowHeadStore.setDown(oneRowDown);
+                RowHeadStore = oneRowDown;
+                tempRow++;
+            }
+            //close scanner
+            fileScanner3.close();
+            //print auditorium
+        }
+        catch(FileNotFoundException noFile){
+            //if file cannot be found, print this
+            System.out.println("File not found");
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         do{
             boolean login = false;
+            Customer c = new Customer();
             pr:
             while (true) {
                 
                 System.out.println("Enter your username: ");
                 username = s.nextLine();
                 if (custList.containsKey(username)) {
-                    Customer c = custList.get(username);
+                    c = custList.get(username);
                     String password = "";
                     int i = 0;
 
@@ -175,6 +297,7 @@ public class Main{
                         }
                         if (i == 3) {
                             System.out.println("Too many incorrect attempts");
+                            c = null;
                             break pr;
                         }
                             
@@ -188,6 +311,31 @@ public class Main{
                 }
             }
             
+            if(c != null){
+                int choice = 0;
+                do{
+                    System.out.println("1. Reserve Seats");
+                    System.out.println("2. View Orders");
+                    System.out.println("3. Update Orders");
+                    System.out.println("4. Display Receipt");
+                    System.out.println("5. Log Out");
+                    try{
+                        choice = s.nextInt();
+                    }
+                    catch(InputMismatchException e){
+                        s.nextLine();
+                        System.out.println("Invalid input");
+                    }
+                }while(choice != 5);
+                
+                // System.out.println(a1.toString());
+                // System.out.println();
+                // System.out.println(a2.toString());
+                // System.out.println();
+                // System.out.println(a3.toString());
+            }
+
+
         }while(!adminExit);
 
         
