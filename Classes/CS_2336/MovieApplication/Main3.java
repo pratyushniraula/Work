@@ -10,9 +10,17 @@ import java.util.HashMap;
 
 // make reserve seats into a method that returns an array as to what seats were reserved
 //or make reserve seats into a string method that returns the starting seat that was reserved
-public class Main{
+public class Main3{
+    //need to add the following methods
+    //read from username and password file
+    //store order file
     //remove seats method
+    //admit settings
     //edit order file, although it could just call the remove order and then the add order method
+    //view reciept method 
+    //main will have to keep track of what auditorium is to be displayed
+
+
 
     private static class Customer{
         public String username;
@@ -27,7 +35,7 @@ public class Main{
             private int adultSeats;
             private int childSeats;
             private int seniorSeats;
-            private ArrayList <seats> seatz = new ArrayList<seats>();
+            private ArrayList <seats> seats = new ArrayList<seats>();
                 //public seats class
                 public static class seats{
                     private int row;
@@ -108,7 +116,7 @@ public class Main{
                 return this.seniorSeats;
             }
             public ArrayList<seats> getSeats(){
-                return this.seatz;
+                return this.seats;
             }
             //setters
             public void setAuditorium(Auditorium a){
@@ -129,8 +137,8 @@ public class Main{
             public void setSeniorSeats(int senior){
                 this.seniorSeats = senior;
             }
-            public void setSeats(ArrayList<seats> seatzz){
-                this.seatz = seatzz;
+            public void setSeats(ArrayList<seats> seats){
+                this.seats = seats;
             }
         }
         public Customer(){}
@@ -146,9 +154,6 @@ public class Main{
         public String getPassword(){
             return this.password;
         }
-        public ArrayList<order> getOrders(){
-            return this.orders;
-        }
         //setters
         public void setUsername(String username){
             this.username = username;
@@ -156,10 +161,6 @@ public class Main{
         public void setPassword(String password){
             this.password = password;
         }
-        public void setOrders(ArrayList<order> orders){
-            this.orders = orders;
-        }
-        
         public void addOrder(Auditorium a, int audnum,  int r, char col, int adult, int child, int senior){
             order o = new order(a, audnum, r, col, adult, child, senior);
             this.orders.add(o);
@@ -167,10 +168,10 @@ public class Main{
 
     }
 
-    public static HashMap<String, Customer> readFromFile(){
+    public static HashMap<String, Customer> readFromFile(String fileName){
         HashMap<String, Customer> table = new HashMap<>();
         try{
-            File file = new File("userdb.dat");
+            File file = new File(fileName);
             Scanner fileScanner = new Scanner(file);
             while(fileScanner.hasNext()){
                 String line = fileScanner.nextLine();
@@ -203,21 +204,22 @@ public class Main{
         // Customer pass = new Customer();
         // Customer.order o = new Customer.order();
         HashMap<String, Customer> custList;
-        custList = readFromFile();
+        System.out.println("Enter the name of the file: ");
+        //String filename = s.nextLine();
+        custList = readFromFile("userdb.dat");
         String username = "";
         
-        String filename;
         ////////////////////////////////////////////////////////////////////////
         try{
             System.out.println("Enter the name of the file for auditorium 1: ");
-            filename = s.nextLine();
-            File file1 = new File(filename);
+            //filename = s.nextLine();
+            File file1 = new File("A1.txt");
             System.out.println("Enter the name of the file for auditorium 2: ");
-            filename = s.nextLine();
-            File file2 = new File(filename);
+            //filename = s.nextLine();
+            File file2 = new File("A2.txt");
             System.out.println("Enter the name of the file for auditorium 3: ");
-            filename = s.nextLine();
-            File file3 = new File(filename);
+            //filename = s.nextLine();
+            File file3 = new File("A3.txt");
             Scanner fileScanner1 = new Scanner(file1);
             Scanner fileScanner2 = new Scanner(file2);
             Scanner fileScanner3 = new Scanner(file3);
@@ -552,7 +554,7 @@ public class Main{
                     //if seats are available, reserve them
                     if (audichoice == 1){
                         //reserve seats
-                        String seatIdentifier = a1.reserveSeats(userRow-1, userCol, adult, child, senior, a1, s, 1);
+                        String seatIdentifier = a1.reserveSeats(userRow-1, userCol, adult, child, senior, a1, s);
                         
                         if(seatIdentifier.equals("")){
                             System.out.println("Seats could not be reserved");
@@ -567,34 +569,10 @@ public class Main{
                         }
                         //add order to customer
                         c.addOrder(a1, 1,  userRow, userCol, adult, child, senior);
-                        // add order to arraylist in seat class
-                        char tempCol = userCol;
-                        while(adult > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'A');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            adult--;
-                            tempCol++;
-                        }
-                        while(child > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'C');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            child--;
-                            tempCol++;
-                        }
-                        while(senior > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'S');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            senior--;
-                            tempCol++;
-                        }
-
                     }
                     else if (audichoice == 2){
                         //reserve seats
-                        String seatIdentifier = a2.reserveSeats(userRow-1, userCol, adult, child, senior, a2, s, 1);
+                        String seatIdentifier = a2.reserveSeats(userRow-1, userCol, adult, child, senior, a2, s);
 
                         if(seatIdentifier.equals("")){
                             System.out.println("Seats could not be reserved");
@@ -610,39 +588,17 @@ public class Main{
 
                         //add order to customer
                         c.addOrder(a2, 2, userRow, userCol, adult, child, senior);
-
-                        char tempCol = userCol;
-                        while(adult > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'A');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            adult--;
-                            tempCol++;
-                        }
-                        while(child > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'C');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            child--;
-                            tempCol++;
-                        }
-                        while(senior > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'S');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            senior--;
-                            tempCol++;
-                        }
                     }
                     else{
                         //reserve seats
-                        String seatIdentifier = a3.reserveSeats(userRow-1, userCol, adult, child, senior, a3, s, 1);
+                        String seatIdentifier = a3.reserveSeats(userRow-1, userCol, adult, child, senior, a3, s);
 
                         if(seatIdentifier.equals("")){
                             System.out.println("Seats could not be reserved");
                             continue;
                         }
                         else{
+                            System.out.println("seatIdentifier: " + seatIdentifier);
                             //break string into two parts
                             char[] split = seatIdentifier.toCharArray();
                             //add order to customer
@@ -652,58 +608,19 @@ public class Main{
 
                         //add order to customer
                         c.addOrder(a3, 3, userRow, userCol, adult, child, senior);
-
-                        char tempCol = userCol;
-                        while(adult > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'A');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            adult--;
-                            tempCol++;
-                        }
-                        while(child > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'C');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            child--;
-                            tempCol++;
-                        }
-                        while(senior > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'S');
-                            c.orders.get(c.orders.size()-1).seatz.add(seat);
-                            senior--;
-                            tempCol++;
-                        }
                     }
                     
                 }
                 else if(choice == 2){
                     //view orders
-                    // for(int i = 0; i < c.orders.size(); i++){
-                    //     int total = c.orders.get(i).getAdultSeats() + c.orders.get(i).getChildSeats() + c.orders.get(i).getSeniorSeats();
-                    //     System.out.print("Auditorium " + c.orders.get(i).auditoriumNumber + ", ");
-                    //     for(int j = 0; j < total; j++){
-                    //         System.out.print(c.orders.get(i).row);
-                    //         System.out.print((char)(c.orders.get(i).startingColumn + j));
-                    //         if(j != total-1){
-                    //             System.out.print(",");
-                    //         }
-                    //     }
-                    //     System.out.println("\n" + c.orders.get(i).getAdultSeats() + " adult, " + c.orders.get(i).getChildSeats() + " child, " + c.orders.get(i).getSeniorSeats() + " senior\n");
-                    // }
-                    //sort through the arraylist and order to find exact seats
-                    //print out the seats
                     for(int i = 0; i < c.orders.size(); i++){
                         int total = c.orders.get(i).getAdultSeats() + c.orders.get(i).getChildSeats() + c.orders.get(i).getSeniorSeats();
                         System.out.print("Auditorium " + c.orders.get(i).auditoriumNumber + ", ");
-                        if (!c.orders.get(i).seatz.isEmpty()) { // Check if seats list is not empty
-                            for(int j = 0; j < total; j++){
-                                System.out.print(c.orders.get(i).seatz.get(j).getRow());
-                                System.out.print(c.orders.get(i).seatz.get(j).getColumn());
-                                if(j != total-1){
-                                    System.out.print(",");
-                                }
+                        for(int j = 0; j < total; j++){
+                            System.out.print(c.orders.get(i).row);
+                            System.out.print((char)(c.orders.get(i).startingColumn + j));
+                            if(j != total-1){
+                                System.out.print(",");
                             }
                         }
                         System.out.println("\n" + c.orders.get(i).getAdultSeats() + " adult, " + c.orders.get(i).getChildSeats() + " child, " + c.orders.get(i).getSeniorSeats() + " senior\n");
@@ -711,210 +628,10 @@ public class Main{
                 }
                 else if(choice == 3){
                     //update orders
-                    //display orders
-                    for(int i = 0; i < c.orders.size(); i++){
-                        System.out.println("Order number: " + (i+1));
-                        int total = c.orders.get(i).getAdultSeats() + c.orders.get(i).getChildSeats() + c.orders.get(i).getSeniorSeats();
-                        System.out.print("Auditorium " + c.orders.get(i).auditoriumNumber + ", ");
-                        if (!c.orders.get(i).seatz.isEmpty()) { // Check if seats list is not empty
-                            for(int j = 0; j < total; j++){
-                                System.out.print(c.orders.get(i).seatz.get(j).getRow());
-                                System.out.print(c.orders.get(i).seatz.get(j).getColumn());
-                                if(j != total-1){
-                                    System.out.print(",");
-                                }
-                            }
-                        }
-                        System.out.println("\n" + c.orders.get(i).getAdultSeats() + " adult, " + c.orders.get(i).getChildSeats() + " child, " + c.orders.get(i).getSeniorSeats() + " senior\n");
-                    }
-
-                    //ask which order they want to update
-                    System.out.println("Which order would you like to update?");
-                    int orderChoice = 0;
-                    do{
-                        try{
-                            orderChoice = s.nextInt();
-                        }
-                        catch(InputMismatchException e){
-                            s.nextLine();
-                            System.out.println("Invalid input");
-                        }
-                        if (orderChoice < 1 || orderChoice > c.orders.size()){
-                            System.out.println("Invalid order number");
-                        }
-                    }while (orderChoice < 1 || orderChoice > c.orders.size());
-
                     System.out.println("1. Add tickets to order\n2. Delete tickets from order\n3. Cancel order");
-                    int updateChoice = 0;
-                    do{
-                        try{
-                            updateChoice = s.nextInt();
-                        }
-                        catch(InputMismatchException e){
-                            s.nextLine();
-                            System.out.println("Invalid input");
-                        }
-                        if (updateChoice < 1 || updateChoice > 3){
-                            System.out.println("Invalid choice");
-                        }
-                    }while (updateChoice < 1 || updateChoice > 3);
-                    if (updateChoice == 1){
-                        //add tickets to order
-                        //get user input
-                        //validate user input for every input
+                    int updateChoice = s.nextInt();
 
-                        //find out which auditorium the order is in
-                        Auditorium audi;
-                        if (c.orders.get(orderChoice-1).auditoriumNumber == 1){
-                            audi = a1;
-                        }
-                        else if (c.orders.get(orderChoice-1).auditoriumNumber == 2){
-                            audi = a2;
-                        }
-                        else{
-                            audi = a3;
-                        }
-                        //display auditorium
-                        System.out.println(audi.toString());
-                        System.out.println();
-                        //try catch the row they want to reserve
-                        int userRow = -1;
-                        do{
-                            System.out.println("Enter the row of the seat you want to reserve: ");
-                            try{
-                                userRow = s.nextInt();
-                            }
-                            catch(InputMismatchException e){
-                                s.nextLine();
-                                System.out.println("Row must be a number");
-                            }
-                            if (userRow < 1 || userRow > maxrow1){
-                                System.out.println("Invalid row");
-                            }
-                        }while (userRow < 1 || userRow > maxrow1);
-
-                        //column validation
-                        //try catch the column they want to reserve
-                        char userCol = 0;
-                        do{
-                            System.out.println("Enter the column of the seat you want to reserve: ");
-                            try{
-                                userCol = s.next().charAt(0);
-                            }
-                            catch(InputMismatchException e){
-                                s.nextLine();
-                                System.out.println("Column must be a letter");
-                            }
-                            if (userCol < 65 || userCol > maxcol1){
-                                System.out.println("Invalid column");
-                            }
-                        }while (userCol < 65 || userCol > maxcol1);
-
-                        //adult validation
-                        //try catch the number of adult seats they want to reserve
-                        int adult = -1;
-                        do{
-                            System.out.println("Enter the number of adult seats you want to reserve: ");
-                            try{
-                                adult = s.nextInt();
-                            }
-                            catch(InputMismatchException e){
-                                s.nextLine();
-                                System.out.println("Number of adult seats must be a number");
-                            }
-                            if (adult < 0){
-                                System.out.println("Invalid number of adult seats");
-                            }
-                        }while (adult < 0);
-
-                        //child validation
-                        //try catch the number of child seats they want to reserve
-                        int child = -1;
-                        do{
-                            System.out.println("Enter the number of child seats you want to reserve: ");
-                            try{
-                                child = s.nextInt();
-                            }
-                            catch(InputMismatchException e){
-                                s.nextLine();
-                                System.out.println("Number of child seats must be a number");
-                            }
-                            if (child < 0){
-                                System.out.println("Invalid number of child seats");
-                            }
-                        }while (child < 0);
-
-                        //senior
-                        //try catch the number of senior seats they want to reserve
-                        int senior = -1;
-                        do{
-                            System.out.println("Enter the number of senior seats you want to reserve: ");
-                            try{
-                                senior = s.nextInt();
-                            }
-                            catch(InputMismatchException e){
-                                s.nextLine();
-                                System.out.println("Number of senior seats must be a number");
-                            }
-                            if (senior < 0){
-                                System.out.println("Invalid number of senior seats");
-                            }
-                        }while (senior < 0);
-
-                        //check if seats are available
-                        //if seats are available, reserve them
-                        
-                        //reserve seats
-                        String seatIdentifier = a1.reserveSeats(userRow-1, userCol, adult, child, senior, audi, s, 1);
-
-                        if(seatIdentifier.equals("")){
-                            System.out.println("Seats could not be reserved");
-                            continue;
-                        }
-                        else{
-                            //break string into two parts
-                            char[] split = seatIdentifier.toCharArray();
-                            //add order to customer
-                            userRow = Character.getNumericValue(split[0]) + 1;
-                            userCol = split[1];
-                        }
-                        //add order to customer on same seat arraylist
-                        //c.getOrders().get(orderChoice-1).get(3);
-                        //c.orders.get(orderChoice-1).seatz.get().getRow()
-
-                        //c.addOrder(a1, 1,  userRow, userCol, adult, child, senior);
-                        // add order to arraylist in seat class
-                        char tempCol = userCol;
-                        c.orders.get(orderChoice-1).setAdultSeats(c.orders.get(orderChoice-1).getAdultSeats() + adult);
-                        c.orders.get(orderChoice-1).setChildSeats(c.orders.get(orderChoice-1).getChildSeats() + child);
-                        c.orders.get(orderChoice-1).setSeniorSeats(c.orders.get(orderChoice-1).getSeniorSeats() + senior);
-
-                        while(adult > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'A');
-                            c.orders.get(orderChoice-1).seatz.add(seat);
-                            adult--;
-                            tempCol++;
-                        }
-                        while(child > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'C');
-                            c.orders.get(orderChoice-1).seatz.add(seat);
-                            child--;
-                            tempCol++;
-                        }
-                        while(senior > 0){
-                            //access the seat arraylist in the order class
-                            Customer.order.seats seat = new Customer.order.seats(userRow, tempCol, 'S');
-                            c.orders.get(orderChoice-1).seatz.add(seat);
-                            senior--;
-                            tempCol++;
-                        }
                 }
-                else if(updateChoice == 2){
-                    //delete tickets from order
-                }
-            }
                 else if(choice == 4){
                     //display receipt
                     double total1Res = 0;
@@ -953,8 +670,13 @@ public class Main{
                 // System.out.println(a3.toString());
             }
 
+
         }while(!adminExit);
-    
+
+        
     }
+    
+    
+
 
 }
