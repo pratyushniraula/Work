@@ -18,15 +18,17 @@ public class Auditorium{
     public Auditorium(){
         head = new Node();
     }
-
+    //setter
     public void setHead(char val) {
         this.head.getSeat().setTicketType(val);
         this.head.getSeat().setColumn((char)65);
         this.head.getSeat().setRow(0);
     }
+    //getter
     public Node getHead() {
         return head;
     }
+        //tostring method
         @Override
         public String toString(){
         //find the amount of columns in each row
@@ -50,7 +52,7 @@ public class Auditorium{
         s = s + "\n";
         int row = 0;
 
-
+        //print out the rows
         Node node = head;
         while(node != null){
             if(node.getNext() != null)
@@ -82,9 +84,11 @@ public class Auditorium{
     }
 
 
-    //cancel order method
-    public void cancelOrder(int row, char col, int adult, int senior, int child, Auditorium auditorium){
-        //get row and column from seat
+
+    //method to remove ticket
+    public char removeTicket(int row, char col, Auditorium auditorium){
+        //remove ticket
+        //get row and column from Seat
         //get the head
         Node node = auditorium.getHead();
         //get valid row
@@ -98,23 +102,26 @@ public class Auditorium{
             node = node.getNext();
         }
 
-        //cancel seats
-        for (int i = 0; i < adult; i++){
-            node.getSeat().setTicketType('.');
-            node = node.getNext();
-        }
-        for (int i = 0; i < child; i++){
-            node.getSeat().setTicketType('.');
-            node = node.getNext();
-        }
-        for (int i = 0; i < senior; i++){
-            node.getSeat().setTicketType('.');
-            node = node.getNext();
-        }
-    }
-    public boolean removeTicket(int row, char col, Auditorium auditorium){
         //remove ticket
-        return true;
+        if(node.getSeat().getTicketType() == 'A' || node.getSeat().getTicketType() == 'S' || node.getSeat().getTicketType() == 'C'){
+            if (node.getSeat().getTicketType() == 'A'){
+                node.getSeat().setTicketType('.');
+                //return A for adult so that the total tickets can be updated
+                return 'A';
+            }
+            else if (node.getSeat().getTicketType() == 'C'){
+                node.getSeat().setTicketType('.');
+                //return C for child so that the total tickets can be updated
+                return 'C';
+            }
+            else if (node.getSeat().getTicketType() == 'S'){
+                node.getSeat().setTicketType('.');
+                //return S for senior so that the total tickets can be updated
+                return 'S';
+            }
+        }
+        //if there is no ticket, return .
+            return '.';
     }
 
     //method to verify seats are taken by particular user
@@ -136,17 +143,21 @@ public class Auditorium{
         //verify seats with seats in seats class
         boolean valid = true;
         for (int i = 0; i < adult; i++){
+            //if the seat is not an adult seat, then it is not valid
             if(node.getSeat().getTicketType() != 'A'){
                 valid = false;
             }
+            //iterate to next node
             node = node.getNext();
         }
+        //same thing for child
         for (int i = 0; i < child; i++){
             if(node.getSeat().getTicketType() != 'C'){
                 valid = false;
             }
             node = node.getNext();
         }
+        //same thing for senior
         for (int i = 0; i < senior; i++){
             if(node.getSeat().getTicketType() != 'S'){
                 valid = false;
@@ -154,13 +165,14 @@ public class Auditorium{
             node = node.getNext();
         }
 
-
+        //return valid
         return valid;
     }
 
     //best available function
 
     public String bestAvailable(int adult, int child, int senior, Auditorium auditorium, Scanner s) {
+        //variable initialization
         int totalTickets = adult + child + senior;
         int bestRow = 100000000;  // Initialize with a value that can't be a valid row
         char bestCol = 0;
@@ -197,7 +209,7 @@ public class Auditorium{
                     //System.out.println(i+1 + "" + (char)(j+65));
                     // the lower the distance from the middle the better, and so if a better one is found replace it ******** something wrong here **********
                     if (distance <= bestDistance) {
-                        if(distance < bestDistance || distance <= bestDistance && Math.abs(i - (row/2)) < Math.abs(bestRow - (row/2))){
+                        if(distance < bestDistance || distance <= bestDistance && Math.abs(i - (row/2)) < Math.abs(bestRow - (row/2)) && row < bestRow){
                             // System.out.println("best distance: " + distance);
                             bestDistance = distance;
                             bestRow = i+1;
@@ -268,15 +280,18 @@ public class Auditorium{
         //check if seat is available
         if(row == node.getSeat().getRow() && column == node.getSeat().getColumn()){
             for (int i = 0; i < totalTickets; i++){
+                //if the seat is not available, then it is not valid
                 if(node.getSeat().getTicketType() == 'A' || node.getSeat().getTicketType() == 'S' || node.getSeat().getTicketType() == 'C'){
                     valid = false;
                 }
+                //iterate to next node
                 if(node.getNext() != null){
                     node = node.getNext();
                 }
             }
         }
         else{
+            //if the seat is not available, then it is not valid
             valid = false;
         }
         
@@ -322,7 +337,7 @@ public class Auditorium{
             String returnStatement = "" + row + "" + col;
             return returnStatement;
         }
-        else if (yesOrNoBestAvailable == 1){
+        else if (!seatValidity(row, col, adultTickets + childTickets + seniorTickets, auditorium) && yesOrNoBestAvailable == 1){
             //do bestavailable
             //everything related to best available and console outputs are in the method best available, unlike my previous programs
             return bestAvailable(adultTickets, childTickets, seniorTickets, auditorium, s);
@@ -335,93 +350,10 @@ public class Auditorium{
     }
 
 
-    public void displayReport(Auditorium auditorium){
-        //write to file
-        try{
-            //initialization of filewriter and printwriter
-            FileOutputStream fileWriter = new FileOutputStream("A1.txt");
-            PrintWriter printWriter = new PrintWriter("A1.txt");
-            //go through list to get values for everything
-            Node node = auditorium.getHead();
-            //print to file
-            while(node != null){
-                Node node2 = node;
-                while(node2 != null && node2.getSeat().getTicketType() != 0){
-                    printWriter.print(node2.getSeat().getTicketType());
-                    node2 = node2.getNext();
-                }
-                printWriter.println();
-                node = node.getDown();
-            }
-            printWriter.close();
-            fileWriter.close();
-        }
-        catch(FileNotFoundException e){
-            System.out.println("File not found");
-        }catch(Exception e){
-            System.out.println("Error");
-        }
-
-        //go through list to get values for everything
-        //set everything to default values
-        Node node = auditorium.getHead();
-        int totalSeats = 0;
-        int totalTickets = 0;
-        int adultTickets = 0;
-        int childTickets = 0;
-        int seniorTickets = 0;
-        double totalSales = 0;
-
-        //go through list to get values for everything
-        while(node != null){
-            Node node2 = node;
-            while(node2 != null && node2.getSeat().getTicketType() != 0){
-                totalSeats++;
-
-                //check if seat contains adult, child or senior
-                if(node2.getSeat().getTicketType() == 'A' || node2.getSeat().getTicketType() == 'S' || node2.getSeat().getTicketType() == 'C'){
-                    //if it is adult
-                    if(node2.getSeat().getTicketType() == 'A'){
-                        adultTickets++;
-                        totalTickets++;
-                        totalSales += 10;
-                    }
-                    //if it is child
-                    else if(node2.getSeat().getTicketType() == 'C'){
-                        childTickets++;
-                        totalTickets++;
-                        totalSales += 5;
-                    }
-                    //if it is senior
-                    else if(node2.getSeat().getTicketType() == 'S'){
-                        seniorTickets++;
-                        totalTickets++;
-                        totalSales += 7.5;
-                    }
-
-                }
-                //iterates to next node
-                node2 = node2.getNext();
-            }
-            //iterates to next node
-            node = node.getDown();
-        }
-
-
-
-        //displays report to console
-        //formated everything to match previous project and core implementation
-        System.out.printf("Total Seats:\t%d\n", totalSeats);
-        System.out.printf("Total Tickets:\t%d\n", totalTickets);
-        System.out.printf("Adult Tickets:\t%d\n", adultTickets);
-        System.out.printf("Child Tickets:\t%d\n", childTickets);
-        System.out.printf("Senior Tickets:\t%d\n", seniorTickets);
-        System.out.printf("Total Sales:\t$%.2f\n", totalSales);
-    }
-
-
     public void fileMaker(Auditorium auditorium, int num){
+        //try catch to make sure file is found
         try{
+           num = num + 5;
             //initialization of filewriter and printwriter
             FileOutputStream fileWriter = new FileOutputStream("A" + num +".txt");
             PrintWriter printWriter = new PrintWriter("A"+ num + ".txt");
@@ -430,7 +362,9 @@ public class Auditorium{
             //print to file
             while(node != null){
                 Node node2 = node;
+                //while loop to print out the row and column
                 while(node2 != null && node2.getSeat().getTicketType() != 0){
+                    //print out the row and column
                     printWriter.print(node2.getSeat().getTicketType());
                     node2 = node2.getNext();
                 }
@@ -503,22 +437,22 @@ public class Auditorium{
         }
         //seats open
         totalAllSeatsOpen += totalSeats-totalTickets;
-        System.out.printf("Open: %d\t", totalSeats-totalTickets);
+        System.out.printf("%d\t", totalSeats-totalTickets);
         //seats reserved
         totalAllTickets += totalTickets;
-        System.out.printf("Reserved: %d\t", totalTickets);
+        System.out.printf("%d\t", totalTickets);
         //adult
         totalAllAdultTickets += adultTickets;
-        System.out.printf("Adult: %d\t", adultTickets);
+        System.out.printf("%d\t", adultTickets);
         //child
         totalAllChildTickets += childTickets;
-        System.out.printf("Child: %d\t", childTickets);
+        System.out.printf("%d\t", childTickets);
         //senior
         totalAllSeniorTickets += seniorTickets;
-        System.out.printf("Senior: %d\t", seniorTickets);
+        System.out.printf("%d\t", seniorTickets);
         //total sales
         totalAllSales += totalSales;
-        System.out.printf("Total Amount: $%.2f\n", totalSales);
+        System.out.printf("$%.2f\n", totalSales);
         ///////////////
 
         node = a2.getHead();
@@ -559,28 +493,28 @@ public class Auditorium{
                 }
                 //iterates to next node
                 node2 = node2.getNext();
-            }
+            }  
             //iterates to next node
             node = node.getDown();
         }
         //seats open
         totalAllSeatsOpen += totalSeats-totalTickets;
-        System.out.printf("Open: %d\t", totalSeats-totalTickets);
+        System.out.printf("%d\t", totalSeats-totalTickets);
         //seats reserved
         totalAllTickets += totalTickets;
-        System.out.printf("Reserved: %d\t", totalTickets);
+        System.out.printf("%d\t", totalTickets);
         //adult
         totalAllAdultTickets += adultTickets;
-        System.out.printf("Adult: %d\t", adultTickets);
+        System.out.printf("%d\t", adultTickets);
         //child
         totalAllChildTickets += childTickets;
-        System.out.printf("Child: %d\t", childTickets);
+        System.out.printf("%d\t", childTickets);
         //senior
         totalAllSeniorTickets += seniorTickets;
-        System.out.printf("Senior: %d\t", seniorTickets);
+        System.out.printf("%d\t", seniorTickets);
         //total sales
         totalAllSales += totalSales;
-        System.out.printf("Total Amount: $%.2f\n", totalSales);
+        System.out.printf("$%.2f\n", totalSales);
         ////////////////
         node = a3.getHead();
         totalSeats = 0;
@@ -627,30 +561,31 @@ public class Auditorium{
         }
         //seats open
         totalAllSeatsOpen += totalSeats-totalTickets;
-        System.out.printf("Open: %d\t", totalSeats-totalTickets);
+        System.out.printf("%d\t", totalSeats-totalTickets);
         //seats reserved
         totalAllTickets += totalTickets;
-        System.out.printf("Reserved: %d\t", totalTickets);
+        System.out.printf("%d\t", totalTickets);
         //adult
         totalAllAdultTickets += adultTickets;
-        System.out.printf("Adult: %d\t", adultTickets);
+        System.out.printf("%d\t", adultTickets);
         //child
         totalAllChildTickets += childTickets;
-        System.out.printf("Child: %d\t", childTickets);
+        System.out.printf("%d\t", childTickets);
         //senior
         totalAllSeniorTickets += seniorTickets;
-        System.out.printf("Senior: %d\t", seniorTickets);
+        System.out.printf("%d\t", seniorTickets);
         //total sales
         totalAllSales += totalSales;
-        System.out.printf("Total Amount: $%.2f\n", totalSales);
-
-        System.out.println();
+        System.out.printf("$%.2f\n", totalSales);
+        
         System.out.print("Total\t");
-        System.out.printf("Open: %d\t", totalAllSeatsOpen);
-        System.out.printf("Reserved: %d\t", totalAllTickets);
-        System.out.printf("Adult: %d\t", totalAllAdultTickets);
-        System.out.printf("Child: %d\t", totalAllChildTickets);
-        System.out.printf("Senior: %d\t", totalAllSeniorTickets);
-        System.out.printf("Total Amount: $%.2f\n", totalAllSales);
+        System.out.printf("%d\t", totalAllSeatsOpen);
+        System.out.printf("%d\t", totalAllTickets);
+        System.out.printf("%d\t", totalAllAdultTickets);
+        System.out.printf("%d\t", totalAllChildTickets);
+        System.out.printf("%d\t", totalAllSeniorTickets);
+        System.out.printf("$%.2f\n", totalAllSales);
+        
+        System.out.println();
     }
 }
