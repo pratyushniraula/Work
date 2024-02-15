@@ -2,6 +2,9 @@
 #include "string.h"
 #include "stdio.h"
 #include "stdbool.h"
+#include "enc_dec.h"
+
+//maybe do 32 or 33 to 126 in file generation to generate ascii values for all possible chars that could be useful, especially for coding files to be encrypted
 
 int main(int argc, char const *argv[])
 {
@@ -59,7 +62,6 @@ int main(int argc, char const *argv[])
 				}
 			}
 
-			if(choice == 1){}
 		
 		}
 		else if(choice == 2){ //choice to decrypt something
