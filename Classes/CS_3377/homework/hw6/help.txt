@@ -1,0 +1,7 @@
+to run the program please compile using:
+
+gcc db.c dbWrapper.c -Wall -o db 
+
+from there running is obviously going to be:
+
+./db
