@@ -1,0 +1,12 @@
+#!/bin/bash
+count=0
+for file in p2_tc*
+do
+	echo hash_tc$count
+	for i in 1 4 16 64 128 256
+	do
+		./htree $file $i >> hash_tc$count
+		echo ----------------------- >> hash_tc$count
+	done
+	((count+=1))
+done

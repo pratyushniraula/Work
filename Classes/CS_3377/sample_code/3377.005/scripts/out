@@ -1,0 +1,141 @@
+echo command = $0
+echo first arg = $1
+echo second arg = $2
+echo "Total no. of args" $#
+echo "Total no. of args" $@
+if [[ $# != 2 ]]
+then
+	echo "usage: args arg1 arg2"
+	exit -1
+fi
+if (( $1 == $2 ))
+then
+	echo 0
+elif (( $1 < $2 ))
+then
+	echo -1
+else
+	echo 1
+fi
+if [[ $# != 2 ]]
+then
+	echo "usage: args arg1 arg2"
+	exit -1
+fi
+if [[ $1 = $2 ]]
+then
+	echo 0
+elif [[ $1 < $2 ]]
+then
+	echo -1
+else
+	echo 1
+fi
+for ((i=0; i < 10; i++)) 
+do
+	echo -n $i
+done
+for i in {100..1..10}
+do
+	echo -n $i
+done
+for i in *
+do
+	echo $i
+	cat $i >> $1
+done
+echo command = $0
+echo first arg = $1
+echo second arg = $2
+echo "Total no. of args" $#
+echo "Total no. of args" $@
+if [[ $# != 2 ]]
+then
+	echo "usage: args arg1 arg2"
+	exit -1
+fi
+if (( $1 == $2 ))
+then
+	echo 0
+elif (( $1 < $2 ))
+then
+	echo -1
+else
+	echo 1
+fi
+if [[ $# != 2 ]]
+then
+	echo "usage: args arg1 arg2"
+	exit -1
+fi
+if [[ $1 = $2 ]]
+then
+	echo 0
+elif [[ $1 < $2 ]]
+then
+	echo -1
+else
+	echo 1
+fi
+for ((i=0; i < 10; i++)) 
+do
+	echo -n $i
+done
+for i in {100..1..10}
+do
+	echo -n $i
+done
+pwd
+for i in *
+do
+	echo $i
+	cat $i >> $1
+done
+echo command = $0
+echo first arg = $1
+echo second arg = $2
+echo "Total no. of args" $#
+echo "Total no. of args" $@
+if [[ $# != 2 ]]
+then
+	echo "usage: args arg1 arg2"
+	exit -1
+fi
+if (( $1 == $2 ))
+then
+	echo 0
+elif (( $1 < $2 ))
+then
+	echo -1
+else
+	echo 1
+fi
+if [[ $# != 2 ]]
+then
+	echo "usage: args arg1 arg2"
+	exit -1
+fi
+if [[ $1 = $2 ]]
+then
+	echo 0
+elif [[ $1 < $2 ]]
+then
+	echo -1
+else
+	echo 1
+fi
+for ((i=0; i < 10; i++)) 
+do
+	echo -n $i
+done
+for i in {100..1..10}
+do
+	echo -n $i
+done
+dir=`pwd`
+echo mydir $dir
+for i in *
+do
+	echo $i
+	cat $i >> $1
+done

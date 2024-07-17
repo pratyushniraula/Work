@@ -1,0 +1,4 @@
+p2_tc?: test case file 
+hash_tc?: output for the corresponding testcase
+hash_tc0_4_verbose and hash_tc0_8_verbose contains verbose output with hash values computed by each thread.
+runp2: script to run all testcases for various number of threads

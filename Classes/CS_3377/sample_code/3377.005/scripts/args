@@ -1,0 +1,5 @@
+echo command = $0
+echo first arg = $1
+echo second arg = $2
+echo "Total no. of args" $#
+echo "Total no. of args" $@

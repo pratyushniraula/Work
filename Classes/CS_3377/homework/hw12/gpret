@@ -1,0 +1,40 @@
+preorder_traverse() {
+    local directory="$1"
+    local stuffinDir=()
+
+    # Print the current directory
+    echo "$(pwd)/$directory:"
+    
+    # Save current directory and change to the target directory
+    local curdir="$(pwd)"
+    cd "$directory" || return
+
+    # Process all files and directories within the current directory
+    for item in *
+    do
+        # Check if item exists to handle empty directories
+        if [ -e "$item" ]
+        then
+            # Print the item name
+            itemsinDir+=("$item")
+        fi
+    done
+
+    echo "${itemsinDir[@]}"
+
+    # Recursively process subdirectories, avoiding symbolic links
+    for item in *
+    do
+        if [ -e "$item" ] && [ -d "$item" ] && ! [ -L "$item" ]
+        then
+            # Recursive call to process the subdirectory
+            preorder_traverse "$item"
+        fi
+    done
+
+    # Return to the previous directory
+    cd "$curdir"
+}
+
+# Call the function with the provided directory
+preorder_traverse "$1"

@@ -1,0 +1,5 @@
+a: b
+	echo hi a
+
+b: a
+	echo hi b
