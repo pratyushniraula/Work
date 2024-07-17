@@ -12,7 +12,8 @@ int main(int argc, char const *argv[])
      *this is a practice project to keep my C skills intact */
 	FILE *encryption;
 	encryption = fopen("EncryptedMessage.txt", "r");
-	bool exitFlag = false;//this will say whether to exit program or not
+	int sizeOfMessage = 1000;
+	char message[sizeOfMessage];
 
 	char letters[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}; //to look for elements subtract the character by 97 to find element in array
 	char encryptedLetters[26];
@@ -25,7 +26,7 @@ int main(int argc, char const *argv[])
 	else{
 		puts("Encryption key opened successfully!\n reading file\n");
 	}
-	while(exitFlag != true){
+	while(true){
 	
 
 		int choice = 0; //choice will determine if user wants do encrypt or decrypt in this situation
@@ -49,7 +50,7 @@ int main(int argc, char const *argv[])
 				puts("wait that's illegal, pick a number between one and two: \n");
 			}
 		}
-
+///////////////////////////////////////////////////////////////////////////////////////////////
 		if(choice == 1){ //choice to encrypt something
 			choice = 0;
 			puts("encrypt a file's message or encrypt message on console? (1 or 2): ");
@@ -79,7 +80,9 @@ int main(int argc, char const *argv[])
 			}
 
 			if(choice == 1){//if trying to decrypt a file
+				puts("enter the file you want to decrypt:\n");
 
+				
 			}
 			else{//if trying to decrypt on console
 				puts("enter the message you want to decrypt:\n");
@@ -90,6 +93,7 @@ int main(int argc, char const *argv[])
 
 		else if(choice == 3){
 		//change encryption
+			
 		}
 
 		else {

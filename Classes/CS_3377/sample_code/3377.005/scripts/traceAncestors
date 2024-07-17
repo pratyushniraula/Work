@@ -1,0 +1,16 @@
+if [[ $# < 1 ]]; then
+	pid=$$
+else
+	pid=$1
+fi
+echo $pid
+ps -ef > psout
+tac psout | while read line
+do
+	str=($line)
+#	echo ${str[1]} ${str[2]}
+	if [[ $pid == ${str[1]} ]]; then
+		echo $line
+		pid=${str[2]}
+	fi
+done

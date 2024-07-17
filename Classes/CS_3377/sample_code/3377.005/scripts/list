@@ -1,0 +1,7 @@
+dir=`pwd`
+echo mydir $dir
+for i in *
+do
+	echo $i
+	cat $i >> $1
+done

@@ -1,0 +1,7 @@
+me:
+Name: Pratyush Niraula
+netID: pxn210033
+
+partner:
+Name: Karl Azangue
+netID: kka210001

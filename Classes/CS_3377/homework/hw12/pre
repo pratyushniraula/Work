@@ -1,0 +1,35 @@
+lsfunction() {
+    local directory="$1"
+    local fileAndDir=()  #Array to store file and directory names for current directory
+    local curdir="$(pwd)" #Store the current directory
+
+
+    cd "$directory" || return  #Exit if directory change fails
+
+
+    echo "$(pwd)"  #Print the path of the current directory
+
+    for fOrDir in *
+    do
+        if [ -e "$fOrDir" ]; then  # Check if file or directory exists
+            fileAndDir+=("$fOrDir")  # Append file or directory to the array
+        fi
+    done
+
+    #print fileAndDir
+    echo "${fileAndDir[@]}"
+
+    # recursively call function for subdirectories
+    for fOrDir in *
+    do
+        if [ -d "$fOrDir" ] && ! [ -L "$fOrDir" ]; then  # Check if it's a directory and also not a symbolic link
+            echo  #newline
+            lsfunction "$fOrDir"  # Recursive call to subdirectory if it is a directory
+        fi
+    done
+
+    # Return to the previous directory
+    cd "$curdir"
+}
+
+lsfunction "$1"

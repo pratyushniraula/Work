@@ -1,0 +1,28 @@
+name="bruh"
+name2=bruhhh
+total=10
+
+echo "this is what name prints out $name"
+echo "this is what name2 prints out $name2"
+
+((total=total*10))
+
+echo "$total"
+echo "this is what ampersand prints out " $&
+echo "this is what dollar sign prints out " $$
+echo "this is what pound prints out " $#
+echo "this is what ! prints out " $!
+echo "this is what star prints out " $*
+
+why(){
+	if(($1 == 1)); then
+	echo 1
+	
+	else
+	thing=$(why $(($1-1)))
+	echo $(($1 + $thing))
+	
+	fi
+}
+
+why 3

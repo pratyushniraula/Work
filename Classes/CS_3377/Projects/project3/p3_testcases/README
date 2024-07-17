@@ -1,0 +1,11 @@
+Open 3 terminals in different machines. 1 for dbserver and 2 for dbclients.
+p3_t0_pg contains put and get operations.
+p3_t1_get contains  10 get operations. 
+
+Run client 1  with p3_t0_pg as input (use input redirection <).
+{prompt} ./dbclient <host_name> <port_num> <p3_t0_pg
+All put and get should be successful
+
+Run client 2  with p3_t0_pg as input (use input redirection <).
+{prompt} ./dbclient <host_name> <port_num> <p3_t1_get
+First 5 should succeed and next 5 should  fail.
