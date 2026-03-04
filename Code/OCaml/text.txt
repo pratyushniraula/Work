@@ -1,0 +1,110 @@
+Usage: ocaml <options> <files>
+Options are:
+
+  -absname  Show absolute filenames in error messages
+  -no-absname  Do not try to show absolute filenames in error messages (default)
+  -alert <list>  Enable or disable alerts according to <list>:
+        +<alertname>  enable alert <alertname>
+        -<alertname>  disable alert <alertname>
+        ++<alertname> treat <alertname> as fatal error
+        --<alertname> treat <alertname> as non-fatal
+        @<alertname>  enable <alertname> and treat it as fatal error
+    <alertname> can be 'all' to refer to all alert names
+  -I <dir>  Add <dir> to the list of include directories
+  -H <dir>  Add <dir> to the list of "hidden" include directories
+     (Like -I, but the program can not directly reference these dependencies)
+  -init <file>  Load <file> instead of default init file
+  -labels  Use commuting label mode
+  -alias-deps  Do record dependencies for module aliases
+  -no-alias-deps  Do not record dependencies for module aliases
+  -app-funct  Activate applicative functors
+  -no-app-funct  Deactivate applicative functors
+  -noassert  Do not compile assertion checks
+  -noinit  Do not load any init file
+  -nolabels  Ignore non-optional labels in types
+  -prompt  Output prompts (default)
+  -noprompt  Suppress all prompts
+  -nopromptcont  Suppress prompts for continuation lines of multi-line inputs
+  -nostdlib  Do not add default directory to the list of include directories
+  -nocwd  Do not implicitly add the current directory to the load path
+  -nopervasives  (undocumented)
+  -open <module>  Opens the module <module> before typing
+  -ppx <command>  Pipe abstract syntax trees through preprocessor <command>
+  -principal  Check principality of type inference
+  -no-principal  Do not check principality of type inference (default)
+  -rectypes  Allow arbitrary recursive types
+  -no-rectypes  Do not allow arbitrary recursive types (default)
+  -safe-string  (default unconditionally since 5.0)
+  -safer-matching  Do not use type information to optimize pattern-matching
+  -short-paths  Shorten paths in types
+  -stdin  Read script from standard input
+  -strict-sequence  Left-hand part of a sequence must have type unit
+  -no-strict-sequence  Left-hand part of a sequence need not have type unit (default)
+  -strict-formats  Reject invalid formats accepted by legacy implementations (default)
+     (Warning: Invalid formats may behave differently from
+      previous OCaml versions, and will become always-rejected
+      in future OCaml versions. You should always use this flag
+      to detect invalid formats so you can fix them.)
+  -no-strict-formats  Accept invalid formats accepted by legacy implementations
+     (Warning: Invalid formats may behave differently from
+      previous OCaml versions, and will become always-rejected
+      in future OCaml versions. You should never use this flag
+      and instead fix invalid formats.)
+  -unboxed-types  unannotated unboxable types will be unboxed
+  -no-unboxed-types  unannotated unboxable types will not be unboxed (default)
+  -unsafe  Do not compile bounds checking on array and string access
+  -unsafe-string  (option not available)
+  -version  Print version and exit
+  --version  Print version and exit
+  -no-version  Do not print version at startup
+  -vnum  Print version number and exit
+  -w <list>  Enable or disable warnings according to <list>:
+        +<spec>   enable warnings in <spec>
+        -<spec>   disable warnings in <spec>
+        @<spec>   enable warnings in <spec> and treat them as errors
+     <spec> can be:
+        <num>             a single warning number
+        <num1>..<num2>    a range of consecutive warning numbers
+        <letter>          a predefined set
+     default setting is "+a-4-7-9-27-29-30-32..42-44-45-48-50-60-66..70"
+  -warn-error <list>  Enable or disable error status for warnings according
+     to <list>.  See option -w for the syntax of <list>.
+     Default setting is "-a"
+  -warn-help  Show description of warning numbers
+  - <file>  Treat <file> as a file name (even if it starts with `-')
+  -color {auto|always|never}  Enable or disable colors in compiler messages
+    The following settings are supported:
+      auto    use heuristics to enable colors only if supported
+      always  enable colors
+      never   disable colors
+    The default setting is 'auto', and the current heuristic
+    checks that the TERM environment variable exists and is
+    not empty or "dumb", and that isatty(stderr) holds.
+  If the option is not specified, these setting can alternatively
+  be set through the OCAML_COLOR environment variable.
+  -error-style {contextual|short}  Control the way error messages and warnings are printed
+    The following settings are supported:
+      short       only print the error and its location
+      contextual  like "short", but also display the source code
+                  snippet corresponding to the location of the error
+    The default setting is 'contextual'.
+  If the option is not specified, these setting can alternatively
+  be set through the OCAML_ERROR_STYLE environment variable.
+  -dno-unique-ids  (undocumented)
+  -dunique-ids  (undocumented)
+  -dno-locations  (undocumented)
+  -dlocations  (undocumented)
+  -dsource  (undocumented)
+  -dparsetree  (undocumented)
+  -dtypedtree  (undocumented)
+  -dshape  (undocumented)
+  -drawlambda  (undocumented)
+  -dlambda  (undocumented)
+  -dinstr  (undocumented)
+  -args <file> Read additional newline-terminated command line arguments
+      from <file>
+  -args0 <file> Read additional null character terminated command line arguments
+from <file>
+  -e <script>  Evaluate given script
+  -help  Display this list of options
+  --help  Display this list of options

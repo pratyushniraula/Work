@@ -1,0 +1,9 @@
+// This SIMPL program computes the factorial of its input.
+// A SIMPL program always receives its input in variable
+// 'arg0' and it must return its output in variable 'ret'.
+ret := 1;
+while !(arg0 <= 1) do (
+  ret := ret * arg0;
+  arg0 := arg0 - 1
+)
+

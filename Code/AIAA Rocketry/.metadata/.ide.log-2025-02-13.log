@@ -1,0 +1,8 @@
+2025-02-20 04:01:46,416 [INFO] WebApp:189 - Connection lost
+2025-02-20 04:01:51,983 [INFO] WebApp:186 - Connection restablished
+2025-02-20 07:51:43,572 [INFO] WebApp:189 - Connection lost
+2025-02-20 07:51:49,427 [INFO] WebApp:186 - Connection restablished
+2025-02-20 08:51:21,298 [INFO] WebApp:189 - Connection lost
+2025-02-20 08:51:26,190 [INFO] WebApp:186 - Connection restablished
+2025-02-20 12:27:13,250 [INFO] WebApp:189 - Connection lost
+2025-02-20 14:09:43,578 [ERROR] WebApp:397 - JxBrowser engine crashed! Exit code: 133

@@ -1,0 +1,15 @@
+// This SIMPL program returns 1 if its input is prime and 0 otherwise.
+
+if (arg0 <= 1) then ret := 0 else ret := 1;
+x := 2;
+while (!(ret <= 0) && (2*x <= arg0)) do (
+  y := x;
+  while (!(ret <= 0) && (y <= arg0)) do (
+    if (arg0 <= y) then
+      ret := 0
+    else
+      y := y + x
+  );
+  x := x + 1
+)
+

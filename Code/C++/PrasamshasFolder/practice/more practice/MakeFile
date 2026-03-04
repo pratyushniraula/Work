@@ -1,0 +1,10 @@
+dynam: dynam.cpp
+	g++ dynam.cpp -o dynam
+	./dynam
+	@echo "----------------------"
+
+all: dynam
+
+clean:
+	rm -f dynam
+
