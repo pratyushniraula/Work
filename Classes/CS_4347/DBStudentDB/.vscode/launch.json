@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run tsx",
+            "runtimeExecutable": "npx", // Use npx to run tsx if it's installed locally
+            "runtimeArgs": ["tsx"],    // Specify tsx as the runtime
+            "cwd": "${workspaceFolder}",
+            "args": ["src/index.ts"],  // Replace with the path to your entry file
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}
