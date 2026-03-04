@@ -18,3 +18,11 @@ __pycache__/
 
 # Node
 node_modules/
+
+# Secrets / credentials
+token.json
+client_secret*.json
+*.env
+.env.*
+!.env.example
+credentials.json

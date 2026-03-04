@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stellar Clash Sandbox</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="ui-container">
+        <div id="sidebar">
+            <h2>Stellar Clash</h2>
+            
+            <div class="panel">
+                <h3>Simulation State</h3>
+                <div id="phase-indicator">Phase: SETUP</div>
+                <button id="btn-start">Start Simulation</button>
+            </div>
+
+            <div class="panel active-side-panel">
+                <h3>Active Command</h3>
+                <div id="side-indicator">Controlling: SIDE 1 (Blue)</div>
+                <small>Hotkeys: [Ctrl+1] Side 1 | [Ctrl+2] Side 2</small>
+            </div>
+
+            <div class="panel">
+                <h3>Ship Palette (Spawn)</h3>
+                <small>Select a ship, then click the map to spawn it for the Active Side.</small>
+                <div id="palette-list"></div>
+            </div>
+
+            <div class="panel">
+                <h3>Template Editor (Modding)</h3>
+                <button id="btn-export">Export JSON</button>
+                <input type="file" id="btn-import" accept=".json" style="display:none;">
+                <button onclick="document.getElementById('btn-import').click()">Import JSON</button>
+                <div id="inspector">
+                    <p>Select a ship on the map to edit its template.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-container">
+            <canvas id="gameCanvas"></canvas>
+            <div id="hotkey-hints">
+                WASD: Pan Camera | Scroll: Zoom | Left Click & Drag: Box Select | Right Click: Move/Attack | Del/Backspace: Delete Ship
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
